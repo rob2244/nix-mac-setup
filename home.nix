@@ -91,7 +91,7 @@
   home.activation.cloneNvimConfig = lib.hm.dag.entryAfter ["writeBoundary"] ''
     if [ ! -d "$HOME/code/neovim-config" ]; then
       echo "Cloning neovim config..."
-      $DRY_RUN_CMD git clone git@github.com:rob2244/neovim-config.git "$HOME/code/neovim-config" || \
+      $DRY_RUN_CMD ${pkgs.git}/bin/git clone git@github.com:rob2244/neovim-config.git "$HOME/code/neovim-config" || \
         echo "Warning: could not clone neovim config. Run: git clone git@github.com:rob2244/neovim-config.git ~/code/neovim-config"
     fi
   '';
@@ -258,12 +258,12 @@
     '';
   };
 
-  # Claude Code — installed via npm
+  # Claude Code — installed via bun
   home.activation.installClaudeCode = lib.hm.dag.entryAfter ["writeBoundary"] ''
     if ! command -v claude &>/dev/null; then
       echo "Installing Claude Code..."
-      $DRY_RUN_CMD ${pkgs.nodePackages.npm}/bin/npm install -g @anthropic-ai/claude-code || \
-        echo "Warning: could not install Claude Code. Run: npm install -g @anthropic-ai/claude-code"
+      $DRY_RUN_CMD ${pkgs.bun}/bin/bun install -g @anthropic-ai/claude-code || \
+        echo "Warning: could not install Claude Code. Run: bun install -g @anthropic-ai/claude-code"
     fi
   '';
 }
