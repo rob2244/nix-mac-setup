@@ -49,7 +49,7 @@
       gpg.format = "ssh";
       gpg.ssh.program = "/Applications/1Password.app/Contents/MacOS/op-ssh-sign";
       commit.gpgsign = true;
-      user.signingkey = "~/.ssh/id_ed25519.pub";
+      user.signingkey = "~/.ssh/id_rsa.pub";
       hooks.pre-commit = "${pkgs.gitleaks}/bin/gitleaks protect --staged -v";
     };
   };
