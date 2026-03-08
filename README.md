@@ -48,7 +48,12 @@ xcode-select --install
 curl --proto '=https' --tlsv1.2 -sSf -L https://install.determinate.systems/nix | sh -s -- install
 ```
 
-3. **Homebrew** (required before the first `darwin-rebuild switch`):
+3. **Rosetta 2** (required for x86-only tools like snowsql):
+```bash
+sudo softwareupdate --install-rosetta
+```
+
+4. **Homebrew** (required before the first `darwin-rebuild switch`):
 ```bash
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 ```
