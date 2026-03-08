@@ -82,6 +82,11 @@
     fi
   '';
 
+  users.users.robinseitz = {
+    name = "robinseitz";
+    home = "/Users/robinseitz";
+  };
+
   nixpkgs.config.allowUnfree = true;
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
   system.stateVersion = 5;
