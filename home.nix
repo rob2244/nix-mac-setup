@@ -54,13 +54,10 @@
     };
   };
 
-  # SSH — delegate auth to 1Password agent
+  # SSH — use 1Password agent locally, but allow forwarded agent over SSH
   programs.ssh = {
     enable = true;
     enableDefaultConfig = false;
-    matchBlocks."*" = {
-      extraOptions.IdentityAgent = ''"~/Library/Group Containers/2BUA8C4S2C.com.1password/t/agent.sock"'';
-    };
     matchBlocks."robins-macbook" = {
       hostname = "robins-macbook.your-tailnet.ts.net";
       user = "robinseitz";
@@ -227,6 +224,12 @@
     '';
 
     initContent = ''
+      # Persist forwarded SSH agent for tmux reattach
+      if [[ -n "$SSH_CONNECTION" ]] && [[ -n "$SSH_AUTH_SOCK" ]] && [[ "$SSH_AUTH_SOCK" != "$HOME/.ssh/agent-forward.sock" ]]; then
+        ln -sf "$SSH_AUTH_SOCK" "$HOME/.ssh/agent-forward.sock"
+        export SSH_AUTH_SOCK="$HOME/.ssh/agent-forward.sock"
+      fi
+
       # auto-attach to tmux on SSH
       if [[ -n "$SSH_CONNECTION" ]] && [[ -z "$TMUX" ]]; then
         tmux new-session -A -s main
@@ -250,6 +253,11 @@
 
       # 1password
       export OP_BIOMETRIC_UNLOCK_ENABLED=true
+
+      # Use 1Password SSH agent locally, but not when agent is forwarded via SSH
+      if [[ -z "$SSH_CONNECTION" ]] && [[ -z "$SSH_AUTH_SOCK" || "$SSH_AUTH_SOCK" == /private/tmp/com.apple.launchd.*/Listeners ]]; then
+        export SSH_AUTH_SOCK="$HOME/Library/Group Containers/2BUA8C4S2C.com.1password/t/agent.sock"
+      fi
     '';
   };
 

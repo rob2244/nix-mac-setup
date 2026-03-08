@@ -69,6 +69,12 @@
 
   services.openssh.enable = true;
 
+  # Enable macOS Screen Sharing (VNC) for remote desktop access
+  system.activationScripts.preActivation.text = ''
+    /bin/launchctl enable system/com.apple.screensharing
+    /bin/launchctl load -w /System/Library/LaunchDaemons/com.apple.screensharing.plist 2>/dev/null || true
+  '';
+
   services.tailscale.enable = true;
 
   # Determinate Nix manages the Nix installation
