@@ -53,9 +53,12 @@
   # Colima autostart via launchd (waits for Homebrew to finish installing)
   launchd.user.agents.colima = {
     serviceConfig = {
+      EnvironmentVariables = {
+        PATH = "/opt/homebrew/bin:/usr/bin:/bin:/usr/sbin:/sbin";
+      };
       ProgramArguments = [
         "/bin/sh" "-c"
-        "for i in $(seq 1 30); do [ -x /opt/homebrew/bin/colima ] && break; sleep 2; done; exec /opt/homebrew/bin/colima start --cpu 4 --memory 8 --disk 60"
+        "for i in $(seq 1 60); do [ -x /opt/homebrew/bin/colima ] && [ -x /opt/homebrew/bin/limactl ] && break; sleep 2; done; exec /opt/homebrew/bin/colima start --cpu 4 --memory 8 --disk 60"
       ];
       RunAtLoad = true;
       KeepAlive = false;
