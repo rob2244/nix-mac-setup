@@ -67,6 +67,8 @@
     };
   };
 
+  services.openssh.enable = true;
+
   services.tailscale.enable = true;
 
   # Determinate Nix manages the Nix installation
