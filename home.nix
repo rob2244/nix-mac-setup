@@ -190,11 +190,11 @@
         "git"
         "fzf"
       ];
-      customPkgs = with pkgs; [
-        zsh-vi-mode
-        zsh-fzf-tab
-      ];
     };
+    plugins = [
+      { name = "zsh-vi-mode"; src = pkgs.zsh-vi-mode; }
+      { name = "zsh-fzf-tab"; src = pkgs.zsh-fzf-tab; }
+    ];
     autosuggestion.enable = true;
     syntaxHighlighting.enable = true;
 
