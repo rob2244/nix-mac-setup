@@ -18,6 +18,7 @@
     zoxide
     bat
     bun
+    nodejs
     lazygit
     pgcli
     httpie
