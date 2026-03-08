@@ -57,14 +57,13 @@
   programs.ssh = {
     enable = true;
     enableDefaultConfig = false;
-    extraConfig = ''
-      Host *
-        IdentityAgent "~/Library/Group Containers/2BUA8C4S2C.com.1password/t/agent.sock"
-
-      Host robins-macbook
-        HostName robins-macbook.your-tailnet.ts.net
-        User robin
-    '';
+    matchBlocks."*" = {
+      extraOptions.IdentityAgent = ''"~/Library/Group Containers/2BUA8C4S2C.com.1password/t/agent.sock"'';
+    };
+    matchBlocks."robins-macbook" = {
+      hostname = "robins-macbook.your-tailnet.ts.net";
+      user = "robinseitz";
+    };
   };
 
   # AWS config
