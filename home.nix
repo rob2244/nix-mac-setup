@@ -26,7 +26,7 @@
 
     # infra / cloud
     pulumi
-    pulumiPackages.pulumi-language-python
+    pulumiPackages.pulumi-python
 
     # security
     gitleaks
@@ -39,9 +39,9 @@
   # Git
   programs.git = {
     enable = true;
-    userName = "Robin";
-    userEmail = "robin@kater.ai";
-    extraConfig = {
+    settings = {
+      user.name = "Robin";
+      user.email = "robin@kater.ai";
       init.defaultBranch = "main";
       pull.rebase = true;
       core.editor = "nvim";
@@ -231,7 +231,7 @@
       export AWS_PROFILE=AdministratorAccess-767847486830
     '';
 
-    initExtra = ''
+    initContent = ''
       # auto-attach to tmux on SSH
       if [[ -n "$SSH_CONNECTION" ]] && [[ -z "$TMUX" ]]; then
         tmux new-session -A -s main

@@ -60,13 +60,8 @@
 
   services.tailscale.enable = true;
 
-  # Nix store maintenance
-  nix.gc = {
-    automatic = true;
-    interval = { Weekday = 0; Hour = 0; Minute = 0; }; # weekly, sunday midnight
-    options = "--delete-older-than 30d";
-  };
-  nix.optimise.automatic = true;
+  # Determinate Nix manages the Nix installation
+  nix.enable = false;
 
   # Flake update reminder
   system.activationScripts.postActivation.text = ''
@@ -90,6 +85,5 @@
   };
 
   nixpkgs.config.allowUnfree = true;
-  nix.settings.experimental-features = [ "nix-command" "flakes" ];
   system.stateVersion = 5;
 }
