@@ -21,6 +21,8 @@
     trackpad = {
       Clicking = true; # tap to click
       TrackpadThreeFingerDrag = true;
+      TrackpadFourFingerHorizSwipeGesture = 2;
+      TrackpadFourFingerVertSwipeGesture = 2;
     };
     NSGlobalDomain = {
       AppleInterfaceStyle = "Dark";
@@ -47,10 +49,13 @@
     onActivation.autoUpdate = true;
   };
 
-  # Colima autostart via launchd
+  # Colima autostart via launchd (waits for Homebrew to finish installing)
   launchd.user.agents.colima = {
-    command = "/opt/homebrew/bin/colima start --cpu 4 --memory 8 --disk 60";
     serviceConfig = {
+      ProgramArguments = [
+        "/bin/sh" "-c"
+        "for i in $(seq 1 30); do [ -x /opt/homebrew/bin/colima ] && break; sleep 2; done; exec /opt/homebrew/bin/colima start --cpu 4 --memory 8 --disk 60"
+      ];
       RunAtLoad = true;
       KeepAlive = false;
       StandardOutPath = "/tmp/colima.log";
@@ -65,16 +70,20 @@
 
   # Nix store maintenance (via launchd since nix.gc/optimise require nix.enable)
   launchd.daemons.nix-gc = {
-    command = "/nix/var/nix/profiles/default/bin/nix store gc --delete-older-than 30d";
     serviceConfig = {
+      ProgramArguments = [
+        "/nix/var/nix/profiles/default/bin/nix" "store" "gc" "--delete-older-than" "30d"
+      ];
       StartCalendarInterval = [{ Weekday = 0; Hour = 0; Minute = 0; }];
       StandardOutPath = "/tmp/nix-gc.log";
       StandardErrorPath = "/tmp/nix-gc.error.log";
     };
   };
   launchd.daemons.nix-optimise = {
-    command = "/nix/var/nix/profiles/default/bin/nix store optimise";
     serviceConfig = {
+      ProgramArguments = [
+        "/nix/var/nix/profiles/default/bin/nix" "store" "optimise"
+      ];
       StartCalendarInterval = [{ Weekday = 0; Hour = 1; Minute = 0; }];
       StandardOutPath = "/tmp/nix-optimise.log";
       StandardErrorPath = "/tmp/nix-optimise.error.log";

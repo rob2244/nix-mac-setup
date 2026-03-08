@@ -90,23 +90,19 @@
   };
 
   home.activation.cloneNvimConfig = lib.hm.dag.entryAfter ["writeBoundary"] ''
-    if [ ! -d "$HOME/code/neovim-config" ]; then
+    if [ ! -d "$HOME/.config/nvim" ]; then
       echo "Cloning neovim config..."
-      $DRY_RUN_CMD ${pkgs.git}/bin/git clone git@github.com:rob2244/neovim-config.git "$HOME/code/neovim-config" || \
-        echo "Warning: could not clone neovim config. Run: git clone git@github.com:rob2244/neovim-config.git ~/code/neovim-config"
+      $DRY_RUN_CMD env GIT_SSH_COMMAND="${pkgs.openssh}/bin/ssh" ${pkgs.git}/bin/git clone git@github.com:rob2244/neovim-config.git "$HOME/.config/nvim" || \
+        echo "Warning: could not clone neovim config. Run: git clone git@github.com:rob2244/neovim-config.git ~/.config/nvim"
     fi
   '';
 
-  xdg.configFile."nvim" = {
-    source = config.lib.file.mkOutOfStoreSymlink "/Users/robinseitz/code/neovim-config";
-    recursive = true;
-  };
 
   # Ghostty — auto-attach to tmux on open
   xdg.configFile."ghostty/config".text = ''
     command = tmux new-session -A -s main
     font-family = MesloLGS Nerd Font
-    font-size = 13
+    font-size = 18
   '';
 
   # Tmux
@@ -193,8 +189,8 @@
       ];
     };
     plugins = [
-      { name = "zsh-vi-mode"; src = pkgs.zsh-vi-mode; }
-      { name = "zsh-fzf-tab"; src = pkgs.zsh-fzf-tab; }
+      { name = "zsh-vi-mode"; src = "${pkgs.zsh-vi-mode}/share/zsh-vi-mode"; }
+      { name = "zsh-fzf-tab"; src = "${pkgs.zsh-fzf-tab}/share/fzf-tab"; }
     ];
     autosuggestion.enable = true;
     syntaxHighlighting.enable = true;
@@ -224,8 +220,6 @@
       export DEEPEVAL_RESULTS_FOLDER="$HOME/code/kater/server/internal/llm/prompt/tests/deepeval_results"
       export POSTGRES_VOLUME_DIR="/tmp/postgres-data"
 
-      # libpq
-      export PATH="/opt/homebrew/opt/libpq/bin:$PATH"
       export PATH="$HOME/.local/bin:$PATH"
 
       # aws
@@ -252,7 +246,7 @@
       export DOCKER_HOST="unix://$HOME/.colima/default/docker.sock"
       export DOCKER_CONFIG="$HOME/.docker"
       mkdir -p ~/.docker/cli-plugins
-      ln -sf $(brew --prefix)/opt/docker-compose/bin/docker-compose ~/.docker/cli-plugins/docker-compose 2>/dev/null
+      ln -sf /opt/homebrew/opt/docker-compose/bin/docker-compose ~/.docker/cli-plugins/docker-compose 2>/dev/null
 
       # 1password
       export OP_BIOMETRIC_UNLOCK_ENABLED=true
