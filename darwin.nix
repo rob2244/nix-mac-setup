@@ -31,6 +31,7 @@
 
   homebrew = {
     enable = true;
+    taps = [ "snowflakedb/snowflake" ];
     casks = [
       "ghostty"
       "1password"
