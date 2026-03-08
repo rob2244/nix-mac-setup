@@ -100,9 +100,9 @@
 
   # Ghostty — auto-attach to tmux on open
   xdg.configFile."ghostty/config".text = ''
-    command = tmux new-session -A -s main
+    command = /etc/profiles/per-user/robinseitz/bin/tmux new-session -A -s main
     font-family = MesloLGS Nerd Font
-    font-size = 18
+    font-size = 16
   '';
 
   # Tmux
