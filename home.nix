@@ -2,6 +2,8 @@
 { pkgs, lib, config, ... }: {
 
   home.stateVersion = "24.11";
+  home.homeDirectory = "/Users/robinseitz";
+  home.username = "robinseitz";
 
   home.packages = with pkgs; [
     # dev tools
@@ -95,7 +97,7 @@
   '';
 
   xdg.configFile."nvim" = {
-    source = config.lib.file.mkOutOfStoreSymlink "/Users/robin/code/neovim-config";
+    source = config.lib.file.mkOutOfStoreSymlink "/Users/robinseitz/code/neovim-config";
     recursive = true;
   };
 

@@ -27,7 +27,7 @@
         {
           home-manager.useGlobalPkgs = true;
           home-manager.useUserPackages = true;
-          home-manager.users.robin = import ./home.nix;
+          home-manager.users.robinseitz = import ./home.nix;
         }
       ];
     };
