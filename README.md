@@ -48,6 +48,11 @@ xcode-select --install
 curl --proto '=https' --tlsv1.2 -sSf -L https://install.determinate.systems/nix | sh -s -- install
 ```
 
+3. **Homebrew** (required before the first `darwin-rebuild switch`):
+```bash
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+```
+
 ## Bootstrap (fresh machine)
 
 ```bash
