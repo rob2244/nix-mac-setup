@@ -39,6 +39,7 @@
       "tailscale"
       "font-meslo-lg-nerd-font"
       "snowflake-snowsql"
+      "google-chrome"
     ];
     brews = [
       "docker"
