@@ -1,0 +1,17 @@
+# Nix
+result
+result-*
+.direnv/
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Secrets — never commit these
+.env
+.env.*
+secrets.nix
+secrets/
+*.pem
+*.key
