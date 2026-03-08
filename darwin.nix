@@ -82,6 +82,8 @@
     fi
   '';
 
+  system.primaryUser = "robinseitz";
+
   users.users.robinseitz = {
     name = "robinseitz";
     home = "/Users/robinseitz";
