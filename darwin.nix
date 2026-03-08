@@ -63,6 +63,24 @@
   # Determinate Nix manages the Nix installation
   nix.enable = false;
 
+  # Nix store maintenance (via launchd since nix.gc/optimise require nix.enable)
+  launchd.daemons.nix-gc = {
+    command = "/nix/var/nix/profiles/default/bin/nix store gc --delete-older-than 30d";
+    serviceConfig = {
+      StartCalendarInterval = [{ Weekday = 0; Hour = 0; Minute = 0; }];
+      StandardOutPath = "/tmp/nix-gc.log";
+      StandardErrorPath = "/tmp/nix-gc.error.log";
+    };
+  };
+  launchd.daemons.nix-optimise = {
+    command = "/nix/var/nix/profiles/default/bin/nix store optimise";
+    serviceConfig = {
+      StartCalendarInterval = [{ Weekday = 0; Hour = 1; Minute = 0; }];
+      StandardOutPath = "/tmp/nix-optimise.log";
+      StandardErrorPath = "/tmp/nix-optimise.error.log";
+    };
+  };
+
   # Flake update reminder
   system.activationScripts.postActivation.text = ''
     days_since_update=0
