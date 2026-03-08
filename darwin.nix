@@ -31,18 +31,17 @@
 
   homebrew = {
     enable = true;
-    taps = [ "snowflakedb/snowflake" ];
     casks = [
       "ghostty"
       "1password"
       "tailscale"
       "font-meslo-lg-nerd-font"
+      "snowflake-snowsql"
     ];
     brews = [
       "docker"
       "colima"
       "docker-compose"
-      "snowsql"
     ];
     onActivation.cleanup = "zap";
     onActivation.autoUpdate = true;
