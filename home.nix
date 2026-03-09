@@ -112,7 +112,17 @@
     terminal = "screen-256color";
     extraConfig = ''
       set -g status-style bg=black,fg=white
+      set -g window-status-current-style bold,fg=#7aa2f7,bg=#3b4261
+      set -g window-status-current-format " #I:#W "
+      set -g window-status-format " #I:#W "
       setw -g pane-base-index 1
+
+      # active pane highlighting
+      set -g pane-border-lines heavy
+      set -g pane-border-style "fg=#3b4261"
+      set -g pane-active-border-style "fg=#7aa2f7"
+      set -g window-style default
+      set -g window-active-style default
 
       # reload config
       bind r source-file ~/.tmux.conf \; display "Config reloaded!"
@@ -122,10 +132,10 @@
       bind - split-window -v -c "#{pane_current_path}"
 
       # vim-style pane navigation
-      bind h select-pane -L
-      bind j select-pane -D
-      bind k select-pane -U
-      bind l select-pane -R
+      bind h if -F '#{pane_at_left}'   '' 'select-pane -L'
+      bind j if -F '#{pane_at_bottom}' '' 'select-pane -D'
+      bind k if -F '#{pane_at_top}'    '' 'select-pane -U'
+      bind l if -F '#{pane_at_right}'  '' 'select-pane -R'
 
       # pane resizing
       bind -r H resize-pane -L 5
