@@ -100,6 +100,7 @@
     command = /etc/profiles/per-user/robinseitz/bin/tmux new-session -A -s main
     font-family = MesloLGS Nerd Font
     font-size = 16
+    keybind = shift+enter=text:\x1b\r
   '';
 
   # Tmux
