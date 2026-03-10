@@ -106,7 +106,7 @@
   # Tmux
   programs.tmux = {
     enable = true;
-    shortcut = "a";
+    shortcut = "Space";
     baseIndex = 1;
     mouse = true;
     terminal = "screen-256color";
@@ -128,7 +128,8 @@
       bind r source-file ~/.tmux.conf \; display "Config reloaded!"
 
       # splits
-      bind | split-window -h -c "#{pane_current_path}"
+      unbind |
+      bind \\ split-window -h -c "#{pane_current_path}"
       bind - split-window -v -c "#{pane_current_path}"
 
       # vim-style pane navigation
